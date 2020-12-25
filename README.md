@@ -28,11 +28,11 @@ public class CameraFollowPlayer : MonoBehaviour
         transform.position = playerTransform.position + deltaTransofrm;
     }
 }
-#
+```
 
 
 -----------------------------------------------------
-## Unity Event Systems
+### Unity Event Systems
 -----------------------------------------------------
 ```C#
 
@@ -65,7 +65,6 @@ public class MyEvents : MonoBehaviour
     }
 }
 
-
 ```
 ### Event Subscriber from Another Classs
 
@@ -93,5 +92,6 @@ public class MyEventSubscriber : MonoBehaviour
 }
 
 ```
-------------------- End Event Systems-----------------------------------
+
+ End Event Systems
 ------------------------------------------------------------------------
