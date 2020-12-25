@@ -31,8 +31,9 @@ public class CameraFollowPlayer : MonoBehaviour
 #
 
 
-
-#Unity Event Systems
+-----------------------------------------------------
+## Unity Event Systems
+-----------------------------------------------------
 ```C#
 
 using System.Collections;
@@ -92,3 +93,5 @@ public class MyEventSubscriber : MonoBehaviour
 }
 
 ```
+------------------- End Event Systems-----------------------------------
+------------------------------------------------------------------------
