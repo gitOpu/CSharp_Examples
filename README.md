@@ -30,6 +30,23 @@ public class CameraFollowPlayer : MonoBehaviour
 }
 ```
 
+-----------------------------------------------------
+### Unity Periodic Function Example
+-----------------------------------------------------
+ public Rigidbody2D projectile;
+
+    void Start()
+    {
+        InvokeRepeating("LaunchProjectile", 2.0f, 0.3f);
+    }
+
+    void LaunchProjectile()
+    {
+        Rigidbody2D instance = Instantiate(projectile);
+
+        instance.velocity = Random.insideUnitSphere * 5;
+    }
+................................
 
 -----------------------------------------------------
 ### Unity Event Systems
@@ -93,5 +110,7 @@ public class MyEventSubscriber : MonoBehaviour
 
 ```
 
- End Event Systems
-------------------------------------------------------------------------
+
+...................................................
+
+
