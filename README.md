@@ -113,4 +113,43 @@ public class MyEventSubscriber : MonoBehaviour
 
 ...................................................
 
+# Click to any object change color
+.....................................................
+Get Mouse or Mobile Touch
+
+```C#
+ if(Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
+            RaycastHit hit;
+            if(Physics.Raycast(ray,out hit))
+            {
+                if(hit.collider != null)
+                {
+                    Color color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
+                    hit.collider.GetComponent<MeshRenderer>().material.color = color;
+                }
+            }
+          
+        }
+#if UNITY_EDITOR
+
+        if (Input.GetMouseButton(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider != null)
+                {
+                    Color color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
+                    hit.collider.GetComponent<MeshRenderer>().material.color = color;
+                }
+            }
+
+        }
+
+#endif
+
+```
 
