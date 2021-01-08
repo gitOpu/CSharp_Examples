@@ -52,34 +52,60 @@ public class CameraFollowPlayer : MonoBehaviour
 ### Unity Event Systems
 -----------------------------------------------------
 ```C#
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 
 public class MyEvents : MonoBehaviour
 {
-
-    public event EventHandler OpenTheDoor;
-    void Start()
+    //1  EVENT HANDLER
+    public event EventHandler OnEventHandler;
+    //2  EVENT HANDLER -- Args pass
+    public event EventHandler<SpacePressedEventCount> OnEventHandlerWithArg;
+    public class SpacePressedEventCount
     {
-        //OpenTheDoor += OpenTheDoorNow;
+        public float count;
     }
+    int count = 5;
 
-   //public void OpenTheDoorNow(object sender, EventArgs e)
-   // {
-        
-   //     Debug.Log("Event Fire");
-   // }
+    // 3 Delegate event
+    public event MyDelegate EventOnMyDelegate;
+    public delegate void MyDelegate(string name);
+    // 4 Action
+    public Action<bool , int > ActionName;
+    //5 Unity Event
+    public UnityEvent OnUnityEvent;
+
+    private void Start()
+    {
+        OnUnityEvent.AddListener(UnityEventListener);
+    }
+    
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            OpenTheDoor?.Invoke(this, EventArgs.Empty);
-          
+            //1  EVENT HANDLER
+            OnEventHandler?.Invoke(this, EventArgs.Empty);
+            //2  EVENT HANDLER -- Args pass
+            OnEventHandlerWithArg?.Invoke(this, new SpacePressedEventCount{count = count});
+            // 3 Delegate event
+            EventOnMyDelegate?.Invoke("Maruf");
+            // 4 Action
+            ActionName?.Invoke(true, 28);
+            //5 Unity Event
+            OnUnityEvent?.Invoke();
         }
     }
+
+    // 5 Unity Event. This event listener will be fired using Listener
+    public void UnityEventListener()
+    {
+        Debug.Log("Unity Event Fired from MyEvent Class");
+    }
+
 }
 
 ```
@@ -90,23 +116,59 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 
 public class MyEventSubscriber : MonoBehaviour
 {
 
-    
+   
+    MyEvents myEvents;
     void Start()
     {
-        MyEvents myEvents = GetComponent<MyEvents>(); //new MyEvents(); 
-        myEvents.OpenTheDoor += OpenTheDoorNow;
+        myEvents = GetComponent<MyEvents>();
+        //1  EVENT HANDLER
+        myEvents.OnEventHandler += MyEvents_OnEventHandler;
+        // 2 EVENT HANDLER Args
+        myEvents.OnEventHandlerWithArg += MyEvents_OnEventHandlerWithArg;
+        // 3 Event on Delegate
+        myEvents.EventOnMyDelegate += MyEvents_EventOnMyDelegate;
+        // 4 Action
+        myEvents.ActionName += NyEvent_ActionName;
+       
+    }
+    // 5 Unity Event. This event listener will be connected from Inspector
+    public void UnityEventListener()
+    {
+        Debug.Log("Unity Event Fired");
     }
 
-   private void OpenTheDoorNow(object sender, EventArgs e)
+    // 4 Action
+    private void NyEvent_ActionName(bool isSelected, int age)
     {
-        Debug.Log("Space has pressed");
+        Debug.Log("This Selected: " + isSelected + "Age: " + age);
+    }
+    // 3 Event Delegate
+    private void MyEvents_EventOnMyDelegate(string name)
+    {
+        print("Name is: " + name);
+    }
+    // 2 EVENT HANDLER Args
+    private void MyEvents_OnEventHandlerWithArg(object sender, MyEvents.SpacePressedEventCount e)
+    {
+        //  throw new NotImplementedException();
+        Debug.Log("MyEvents_OnEventHandlerWithArg : " + e.count);
+    }
+    //1  EVENT HANDLER
+    private void MyEvents_OnEventHandler(object sender, EventArgs e)
+    {
+        Debug.Log("MyEvents_OnEventHandler");
     }
    
+
+   
+
 }
+
 
 ```
 
