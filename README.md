@@ -171,7 +171,47 @@ public class MyEventSubscriber : MonoBehaviour
 
 
 ```
+# Event System Easy Example - 2
 
+```C#
+using UnityEngine;
+using System;
+using System.Collections.Generic;
+
+// Starting in 2 seconds.
+// a projectile will be launched every 0.3 seconds
+//  Declaration Conditional Invoke, Call and Implementation
+
+public class ExampleScript : MonoBehaviour
+{
+
+    public delegate void TestDelegate();
+    public TestDelegate TestDelegateFunction;
+    public delegate void TestFloatDelegate(int i);
+    public TestFloatDelegate TestFloatDelegateFunction;
+
+    public Action testAction;
+    public Action<bool, int> testActionTwo;
+
+    public Func<int> testFunc;
+
+    void Start()
+    {
+        TestDelegateFunction = TestDelegateFunctions;
+        TestDelegateFunction = () =>  Debug.Log("Labdata expresssion");
+        TestDelegateFunction = delegate () { Debug.Log("Labdata expresssion"); };
+
+        testActionTwo = (bool isPass, int i) => { Debug.Log("is pass" + isPass + "i" + i); };
+       // testFunc = (int i) => { Debug.Log("Is True " + i); };
+    }
+    private void TestDelegateFunctions()
+    {
+        Debug.Log("TestDelegateFunction");
+    }
+    
+}
+
+```
 
 ...................................................
 
